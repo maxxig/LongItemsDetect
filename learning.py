@@ -16,13 +16,13 @@ def print_results(N, p, r):
 
 
 if __name__ == "__main__":
-    train_data = os.path.join(os.getenv("DATADIR", ''), 'product_description.train')
-    valid_data = os.path.join(os.getenv("DATADIR", ''), 'product_description.valid')
+    train_data = os.path.join(os.getenv("DATADIR", ''), 'product_description_stem.train')
+    valid_data = os.path.join(os.getenv("DATADIR", ''), 'product_description_stem.valid')
     print(f'Start train {datetime.now()}')
     # train_supervised uses the same arguments and defaults as the fastText cli
     model = train_supervised(
-        input = train_data, epoch = 50, lr = 1.0, wordNgrams = 2, bucket = 200000, dim = 300, loss = 'hs', minCount = 1 #, thread=4 #, ws = 10  # 0.854
-        # 75, 81.7
+        #input = train_data, epoch = 50, lr = 1.0, wordNgrams = 2, bucket = 200000, dim = 300, loss = 'hs', minCount = 1 #0.938
+        input = train_data, epoch = 50, lr = 1, wordNgrams = 2, bucket = 200000, dim = 300, loss = 'softmax', minCount = 1 #0.938
     )
     print(f'Finish train {datetime.now()}')
     print_results(*model.test(valid_data))
